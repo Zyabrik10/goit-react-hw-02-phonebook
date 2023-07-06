@@ -7,7 +7,7 @@ export class ContactList extends Component {
     return (
       <ul className="contacts-list global-list">
         {contacts.length ? (
-          contacts.map(({ number, name, id }) =>
+          contacts.map(({ number, name, id }, index) =>
             name.toLowerCase().includes(filter.toLowerCase()) ? (
               <li key={id}>
                 <p className="global-p">
@@ -15,7 +15,7 @@ export class ContactList extends Component {
                 </p>
                 <button
                   className="ph-button global-button"
-                  data-id={id}
+                  data-index={index}
                   onClick={removeFromContactsListEvent}
                 >
                   &times;

@@ -36,16 +36,14 @@ export class App extends Component {
   }
   inputFilterEvent = this.inputFilter.bind(this);
 
-  removeFromContactsList({ target }) {
+  removeFromContactsList({ currentTarget }) {
     const { contacts } = this.state;
-    for (let i = 0; i < contacts.length; i++) {
-      if (contacts[i].id === target.getAttribute('data-id')) {
-        const newContacts = contacts.slice();
-        newContacts.splice(i, 1);
-        this.setState({ ...this.state, contacts: newContacts });
-        return;
-      }
-    }
+
+    const index = currentTarget.getAttribute('data-index');
+    const newContacts = contacts.slice();
+
+    newContacts.splice(index, 1);
+    this.setState({ ...this.state, contacts: newContacts });
   }
   removeFromContactsListEvent = this.removeFromContactsList.bind(this);
 
