@@ -1,9 +1,26 @@
 import { Component } from 'react';
 import { inputFocus } from 'js/input-focus';
 export class ContactForm extends Component {
+  state = {
+    name: '',
+    number: '',
+  };
+
+  inputName({ target }) {
+    this.setState({ ...this.state, name: target.value });
+  }
+  inputNameEvent = this.inputName.bind(this);
+
+  inputNumber({ target }) {
+    this.setState({ ...this.state, number: target.value });
+  }
+  inputNumberEvent = this.inputNumber.bind(this);
+
   render() {
-    const { name, number, inputNameEvent, inputNumberEvent, addContactEvent } =
-      this.props;
+    const { addContactEvent } = this.props;
+
+    const name = this.name;
+    const number = this.number;
 
     return (
       <form className="contact-form" action="" onSubmit={addContactEvent}>
@@ -16,7 +33,7 @@ export class ContactForm extends Component {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
             value={name}
-            onChange={inputNameEvent}
+            onChange={this.inputNameEvent}
             autoComplete="off"
             onBlur={inputFocus}
           />
@@ -30,7 +47,7 @@ export class ContactForm extends Component {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             value={number}
-            onChange={inputNumberEvent}
+            onChange={this.inputNumberEvent}
             id="phone-input"
             autoComplete="off"
             onBlur={inputFocus}
