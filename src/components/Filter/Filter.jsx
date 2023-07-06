@@ -5,8 +5,10 @@ export class Filter extends Component {
     const { filter, inputFilterEvent } = this.props;
     return (
       <div>
-        <p className='global-p'>Find contacts by name</p>
-        <input type="text" onChange={inputFilterEvent} value={filter} />
+        <p className="contact-list-title global-p">Find contacts by name</p>
+        <div className="input-box">
+          <input type="text" onChange={inputFilterEvent} value={filter} />
+        </div>
       </div>
     );
   }

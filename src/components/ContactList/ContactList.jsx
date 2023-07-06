@@ -6,22 +6,29 @@ export class ContactList extends Component {
 
     return (
       <ul className="contacts-list global-list">
-        {contacts.map(({ number, name, id }) =>
-          name.toLowerCase().includes(filter.toLowerCase()) ? (
-            <li key={id}>
-              <p className="global-p">{name}</p>
-              <p className="global-p">{number}</p>
-              <button
-                className="global-button"
-                data-id={id}
-                onClick={removeFromContactsListEvent}
-              >
-                &times;
-              </button>
-            </li>
-          ) : (
-            ''
+        {contacts.length ? (
+          contacts.map(({ number, name, id }) =>
+            name.toLowerCase().includes(filter.toLowerCase()) ? (
+              <li key={id}>
+                <p className="global-p">
+                  {name}: {number}
+                </p>
+                <button
+                  className="ph-button global-button"
+                  data-id={id}
+                  onClick={removeFromContactsListEvent}
+                >
+                  &times;
+                </button>
+              </li>
+            ) : (
+              ''
+            )
           )
+        ) : (
+          <li>
+            <p className="global-p">There is no contacts yet</p>
+          </li>
         )}
       </ul>
     );
