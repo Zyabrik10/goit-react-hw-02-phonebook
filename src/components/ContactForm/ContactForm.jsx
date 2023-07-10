@@ -1,29 +1,39 @@
 import { Component } from 'react';
 import { inputFocus } from 'js/input-focus';
+import PropTypes from 'prop-types';
+import { nanoid } from 'nanoid';
 export class ContactForm extends Component {
   state = {
     name: '',
     number: '',
   };
 
-  inputName({ target }) {
-    this.setState({ ...this.state, name: target.value });
-  }
-  inputNameEvent = this.inputName.bind(this);
+  addContact = this.props.addContact;
 
-  inputNumber({ target }) {
-    this.setState({ ...this.state, number: target.value });
-  }
-  inputNumberEvent = this.inputNumber.bind(this);
+  inputName = ({ target }) => {
+    this.setState({ name: target.value });
+  };
+
+  inputNumber = ({ target }) => {
+    this.setState({ number: target.value });
+  };
+
+  formHandler = e => {
+    e.preventDefault();
+    const form = e.target;
+
+    const name = form.name.value.trim();
+    const number = form.number.value.trim();
+    const id = nanoid();
+
+    this.addContact({ name, number, id });
+  };
 
   render() {
-    const { addContactEvent } = this.props;
-
-    const name = this.name;
-    const number = this.number;
+    const { name, number } = this.state;
 
     return (
-      <form className="contact-form" action="" onSubmit={addContactEvent}>
+      <form className="contact-form" action="" onSubmit={this.formHandler}>
         <div className="input-box">
           <input
             type="text"
@@ -33,7 +43,7 @@ export class ContactForm extends Component {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
             value={name}
-            onChange={this.inputNameEvent}
+            onChange={this.inputName}
             autoComplete="off"
             onBlur={inputFocus}
           />
@@ -47,7 +57,7 @@ export class ContactForm extends Component {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             value={number}
-            onChange={this.inputNumberEvent}
+            onChange={this.inputNumber}
             id="phone-input"
             autoComplete="off"
             onBlur={inputFocus}
@@ -61,3 +71,7 @@ export class ContactForm extends Component {
     );
   }
 }
+
+ContactForm.propTypes = {
+  addContact: PropTypes.func,
+};
